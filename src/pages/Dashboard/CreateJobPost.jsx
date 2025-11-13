@@ -11,6 +11,7 @@ const CreateJobPost = () => {
 
   const CreateJobPostHandler = async (e) => {
     e.preventDefault();
+    setLoader(true);
     const form = e.target;
     const title = form.title.value;
     const company = form.company.value;
