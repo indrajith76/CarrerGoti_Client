@@ -9,7 +9,7 @@ const Resources = () => {
         const fetchResources = async () => {
             setLoading(true);
             try {
-                const res = await axios.get("/api/Resource");
+                const res = await axios.get("/api/resource");
                 setResources(res.data.data);
             } catch (error) {
                 console.error(error);
