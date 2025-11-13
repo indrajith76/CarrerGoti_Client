@@ -4,23 +4,25 @@ const CreateJobPost = () => {
   const CreateJobPostHandler = (e) => {
     e.preventDefault();
     const form = e.target;
-    const jobTitle = form.jobTitle.value;
+    const title = form.title.value;
     const company = form.company.value;
     const location = form.location.value;
     const requiredSkills = form.requiredSkills.value;
-    const recommendedExperienceLevel = form.recommendedExperienceLevel.value;
+    const experienceLevel = form.experienceLevel.value;
     const jobType = form.jobType.value;
     const jobDescription = form.jobDescription.value;
     console.log({
-      jobTitle,
+      title,
       company,
       location,
       requiredSkills,
-      recommendedExperienceLevel,
+      experienceLevel,
       jobType,
       jobDescription,
     });
   };
+
+
 
   return (
     <div className="mb-10">
@@ -31,13 +33,13 @@ const CreateJobPost = () => {
         className="grid md:grid-cols-2 gap-5 mt-10"
       >
         <div>
-          <label htmlFor="jobTitle" className="block">
+          <label htmlFor="title" className="block">
             Job Title
           </label>
           <input
             type="text"
-            id="jobTitle"
-            name="jobTitle"
+            id="title"
+            name="title"
             className="input w-full border rounded-lg"
           />
         </div>
@@ -79,13 +81,13 @@ const CreateJobPost = () => {
         </div>
 
         <div>
-          <label htmlFor="recommendedExperienceLevel" className="block">
+          <label htmlFor="experienceLevel" className="block">
             Recommended Experience Level
           </label>
           <input
             type="text"
-            id="recommendedExperienceLevel"
-            name="recommendedExperienceLevel"
+            id="experienceLevel"
+            name="experienceLevel"
             className="input w-full border rounded-lg"
           />
         </div>
