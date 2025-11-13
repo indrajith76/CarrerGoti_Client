@@ -44,13 +44,13 @@ const ManageLearningResources = () => {
                 <th>Image</th>
                 <th>Related Skills</th>
                 <th>Platform</th>
-                <th>URL</th> 
+                <th>URL</th>
                 <th className="text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
               {learningResources.map((learningResource, idx) => (
-                <tr>
+                <tr key={learningResource._id}>
                   <th>{idx + 1}</th>
                   <td>{learningResource?.title}</td>
                   <td>
@@ -58,7 +58,7 @@ const ManageLearningResources = () => {
                   </td>
                   <td>{learningResource?.relatedSkills}</td>
                   <td>{learningResource?.platform}</td>
-                  <td>{learningResource?.url}</td> 
+                  <td>{learningResource?.url}</td>
                   <td className="flex gap-2">
                     <button className="btn btn-sm btn-success text-white text-lg">
                       <FaRegEdit />

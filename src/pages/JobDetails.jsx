@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../api/axios";
-import { FaMapMarkerAlt, FaBriefcase, FaUsers } from "react-icons/fa";
+import { FaMapMarkerAlt, FaBriefcase, FaUsers, FaBuilding } from "react-icons/fa";
 import { MdOutlineWork } from "react-icons/md";
 
 const JobDetails = () => {
@@ -36,10 +36,13 @@ const JobDetails = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto p-6 shadow-lg rounded-xl border mt-10">
+        <div className="max-w-4xl mx-auto p-6 shadow-lg rounded-xl border mt-10 bg-white">
             <h1 className="text-3xl font-bold text-primary mb-4">{job.title}</h1>
 
             <div className="flex flex-wrap gap-4 mb-4 text-gray-600">
+                <p className="flex items-center gap-2">
+                    <FaBuilding /> {job.company}
+                </p>
                 <p className="flex items-center gap-2">
                     <FaUsers /> {job.organizationEmail}
                 </p>
@@ -72,8 +75,8 @@ const JobDetails = () => {
 
             <div className="mb-6">
                 <h3 className="font-semibold text-gray-700 mb-2">Job Description:</h3>
-                <p className="text-gray-600">
-                    {job.description || "No detailed description provided."}
+                <p className="text-gray-600 leading-relaxed">
+                    {job.jobDescription || "No detailed description provided."}
                 </p>
             </div>
 

@@ -25,14 +25,16 @@ const ManageJobPost = () => {
     fetchJobs();
   }, []);
 
+  console.log(jobs)
+
   return (
     <div className="mb-10">
       <h2 className="text-2xl">Manage Job Posts</h2>
       {jobsLoader ? (
         <div className="flex items-center justify-center mt-10">
-            <span className="loading loading-spinner loading-xl"></span>
+          <span className="loading loading-spinner loading-xl"></span>
         </div>
-            
+
       ) : (
         <div className="overflow-x-auto mt-10">
           <table className="table table-xs">
@@ -51,7 +53,7 @@ const ManageJobPost = () => {
             </thead>
             <tbody>
               {jobs.map((job, idx) => (
-                <tr>
+                <tr key={job._id}>
                   <th>{idx + 1}</th>
                   <td>{job?.title}</td>
                   <td>{job?.company}</td>
