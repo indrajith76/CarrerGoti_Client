@@ -9,7 +9,9 @@ const Navbar = () => {
     <div className="shadow">
       <div className="flex items-center justify-between container mx-auto py-2">
         <div>
-          <img className="w-[50%]" src="/src/assets/images/Logo.svg" alt="" />
+          <Link to="/">
+            <img className="w-[50%]" src="/src/assets/images/Logo.svg" alt="" />
+          </Link>
         </div>
         <div className="dropdown dropdown-end lg:hidden">
           <div tabIndex={0} role="button" className="btn m-1">

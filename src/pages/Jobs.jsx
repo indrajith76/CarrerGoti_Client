@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { FaMapMarkerAlt, FaBriefcase, FaUsers, FaSearch, FaBuilding } from "react-icons/fa";
 import { MdOutlineWork } from "react-icons/md";
 import { Link } from "react-router-dom";
+import JobCard from "../components/ui/JobCard";
 
 const Jobs = () => {
     const [jobs, setJobs] = useState([]);
@@ -103,33 +104,7 @@ const Jobs = () => {
             {/* Jobs Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {jobs.map((job) => (
-                    <Link
-                        to={`/jobs/${job._id}`}
-                        key={job._id}
-                        className="border rounded-lg p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer flex flex-col justify-between"
-                    >
-                        <div>
-                            <h3 className="text-lg font-semibold mb-2 text-primary">{job.title}</h3>
-                            <p className="text-gray-700 text-sm mb-2 flex items-center gap-1 font-medium">
-                                <FaBuilding /> {job.company}
-                            </p>
-                            <p className="text-gray-600 text-sm mb-2 flex items-center gap-1">
-                                <FaUsers /> {job.organizationEmail}
-                            </p>
-                            <p className="text-gray-600 text-sm mb-2 flex items-center gap-1">
-                                <FaMapMarkerAlt /> {job.location}
-                            </p>
-                            <p className="text-gray-600 text-sm mb-2 flex items-center gap-1">
-                                <FaBriefcase /> {job.experienceLevel}
-                            </p>
-                            <p className="text-gray-600 text-sm mb-2 flex items-center gap-1">
-                                <MdOutlineWork /> {job.jobType}
-                            </p>
-                            <p className="text-gray-500 text-sm line-clamp-3 mt-2">
-                                {job.jobDescription}
-                            </p>
-                        </div>
-                    </Link>
+                    <JobCard key={job._id} job={job} />
                 ))}
             </div>
 
