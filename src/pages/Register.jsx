@@ -60,6 +60,17 @@ const Register = () => {
         </div>
 
         <div className="my-5">
+          <label className="block" htmlFor="AccountFor">
+            Account for
+          </label>
+          <select name="AccountFor" id="AccountFor" className="input">
+            <option value="" disabled>Select...</option>
+            <option value="Organization">Organization</option>
+            <option value="Applicant">Applicant</option> 
+          </select>
+        </div>
+
+        <div className="my-5">
           <label className="block" htmlFor="password">
             Password
           </label>
