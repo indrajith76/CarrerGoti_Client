@@ -39,9 +39,11 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <button className="btn btn-xs text-white btn-primary">
-                    Register
-                  </button>
+                  <Link to={"/register"}>
+                    <button className="btn btn-xs text-white btn-primary">
+                      Register
+                    </button>
+                  </Link>
                 </li>
               </>
             ) : (
@@ -64,7 +66,7 @@ const Navbar = () => {
             <Link to={"/"}>Resources</Link>
           </li>
           <li>
-            <Link to={"/"}>Profile</Link>
+            <Link to={"/Profile"}>Profile</Link>
           </li>
           {true ? (
             <>
@@ -76,9 +78,11 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <button className="btn btn-xs text-white btn-primary">
-                  Register
-                </button>
+                <Link to={"/register"}>
+                  <button className="btn btn-xs text-white btn-primary">
+                    Register
+                  </button>
+                </Link>
               </li>
             </>
           ) : (
