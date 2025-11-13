@@ -1,16 +1,34 @@
-# React + Vite
+![alt](/src/assets/images/logoicon.svg)
+# **CareerGoti** 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Empowering youth through career-ready opportunities and skill development — supporting SDG Goal 8: Decent Work \& Economic Growth.
 
-Currently, two official plugins are available:
+### **Project Overview**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+CareerGoti is an online one-stop destination for students and freshers to explore suitable job openings and learning resources. Connecting the dots on skills, education, and aspirations, CareerGoti inspires sustainable employment and growth.
 
-## React Compiler
+### **Tech Stack** 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* React
+* React Router DOM
+* Tailwind CSS
+* DaisyUI
+* React Icons
+* Sonner Toast
+* Axios
+ 
+### **Setup Instructions -**
 
-## Expanding the ESLint configuration
+1\. Clone the Repository using - ```git clone [url]```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2\. Install Dependencies using - ```npm i```
+
+3\. Set Environment Variables 
+
+4\. Run This Project using - ```npm run dev```
+
+
+### **Seed data includes:**
+
+* Jobs \& Opportunities (15–20 entries)
+* Learning Resources (15–20 entries)
