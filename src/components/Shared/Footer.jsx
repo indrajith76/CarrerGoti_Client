@@ -1,10 +1,107 @@
 import React from 'react';
+import { FaFacebook, FaGithub } from 'react-icons/fa';
+import logo from "../../assets/images/Logo.svg"
 
 const Footer = () => {
     return (
-        <div>
-            
-        </div>
+        <footer className="bg-white dark:bg-gray-900">
+            <div className="container p-6 mx-auto">
+                <div className="lg:flex">
+                    <div className="w-full -mx-6 lg:w-2/5">
+                        <div className="px-6">
+                            <a href="#">
+                                <img
+                                    className="w-auto h-12"
+                                    src={logo}
+                                    alt=""
+                                />
+                            </a>
+
+                            <p className="max-w-sm mt-2 text-gray-500 dark:text-gray-400">
+                                Join 31,000+ other and never miss out on new tips, tutorials, and more.
+                            </p>
+
+                            <div className="flex mt-6 -mx-2">
+
+
+                                <a
+                                    href="#"
+                                    className="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                                    aria-label="Facebook"
+                                >
+                                    <FaFacebook />
+                                </a>
+
+                                <a
+                                    href="#"
+                                    className="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                                    aria-label="Github"
+                                >
+                                    <FaGithub />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-6 lg:mt-0 lg:flex-1">
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            <div>
+                                <h3 className="text-gray-700 uppercase dark:text-white">About</h3>
+                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    Company
+                                </a>
+                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    community
+                                </a>
+                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    Careers
+                                </a>
+                            </div>
+
+                            <div>
+                                <h3 className="text-gray-700 uppercase dark:text-white">Team Diary</h3>
+                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    Blog
+                                </a>
+                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    Our Services
+                                </a>
+                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    Free Job Alerts
+                                </a>
+                            </div>
+
+                            <div>
+                                <h3 className="text-gray-700 uppercase dark:text-white">Terms & Conditions</h3>
+                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    Privacy
+                                </a>
+                                <a href="#" className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    Contact us
+                                </a>
+                            </div>
+
+                            <div>
+                                <h3 className="text-gray-700 uppercase dark:text-white">Contact</h3>
+                                <span className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    +1 526 654 8965
+                                </span>
+                                <span className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
+                                    example@email.com
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr className="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" />
+
+                <div>
+                    <p className="text-center text-gray-500 dark:text-gray-400">© CareerGoti {new Date().getFullYear()} - All rights reserved</p>
+                </div>
+            </div>
+        </footer>
+
     );
 };
 
