@@ -3,7 +3,16 @@ import React from "react";
 const Banner = () => {
   return (
     <div className="carousel w-full h-[80vh]">
-      <div id="slide1" className="carousel-item relative w-full overflow-hidden">
+      <div
+        id="slide1"
+        className="carousel-item relative w-full overflow-hidden"
+      >
+        <div className="absolute top-0 bottom-0 right-0 left-0 bg-[#17175271] flex flex-col items-center justify-center">
+          <h1 className="text-center text-white text-6xl kaushan-script">
+            Bridge Skills To Bright Careers
+          </h1>
+          <p className="w-1/2 text-white text-sm text-center mt-4">Helps learners turn their skills into promising, employable, and sustainable career pathways. Translates potential into employment by linking personal development with relevant job opportunities.</p>
+        </div>
         <img
           src="https://images.ctfassets.net/gogvzi849aaj/1KPO3rlI6jGaq1jFeWMGZr/c33f946ea0f8367188528a4f9d0f239c/CareerService_Hero.jpeg"
           className="w-full object-cover"
