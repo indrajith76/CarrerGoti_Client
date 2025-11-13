@@ -23,12 +23,12 @@ const CreateJobPost = () => {
   };
 
   return (
-    <div className="">
+    <div className="mb-10">
       <h2 className="text-2xl">Create Job Post</h2>
 
       <form
         onSubmit={CreateJobPostHandler}
-        className="grid grid-cols-2 gap-5 mt-10"
+        className="grid md:grid-cols-2 gap-5 mt-10"
       >
         <div>
           <label htmlFor="jobTitle" className="block">
@@ -101,7 +101,7 @@ const CreateJobPost = () => {
             className="input w-full border rounded-lg"
           />
         </div>
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <label htmlFor="jobDescription" className="block">
             Job Description
           </label>
@@ -112,7 +112,7 @@ const CreateJobPost = () => {
             className="input w-full h-20 border rounded-lg p-1"
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary col-span-2">
+        <button type="submit" className="btn btn-primary md:col-span-2">
           Publish Job Post
         </button>
       </form>
