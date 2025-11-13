@@ -1,5 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
-import Root from "../layouts/root";
+import { createBrowserRouter } from "react-router-dom"; 
 import Home from "../pages/home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -14,6 +13,7 @@ import ManageAllUsers from "../pages/Dashboard/ManageAllUsers";
 import Jobs from "../pages/jobs";
 import JobDetails from "../pages/JobDetails";
 import Resources from "../pages/Resources";
+import Root from "../layouts/root";
 
 export const router = createBrowserRouter([
   {
