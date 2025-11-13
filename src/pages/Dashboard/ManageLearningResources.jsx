@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { toast } from "sonner";
+import privateAxios from "../../api/privateAxios";
 
 const ManageLearningResources = () => {
   const [learningResources, setLearningResources] = useState([]);
@@ -11,7 +13,7 @@ const ManageLearningResources = () => {
     const fetchLearningResources = async () => {
       setLearningResourcesLoader(true);
       try {
-        const res = await axios.get("/api/Resource");
+        const res = await axios.get("/api/resource");
         if (res.data.success) {
           setLearningResources(res.data.data);
         }
@@ -25,7 +27,21 @@ const ManageLearningResources = () => {
     fetchLearningResources();
   }, []);
 
-  console.log(learningResources)
+  const handleDelete = async (id) => {
+    const toastId = toast.loading("Deleting...");
+    try {
+      const res = await privateAxios.delete(`/api/resource/${id}`);
+      if (res.data.success) {
+        setLearningResources(learningResources.filter((lr) => lr._id !== id));
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    } finally {
+      toast.dismiss(toastId);
+    }
+  };
 
   return (
     <div className="mb-10">
@@ -63,7 +79,7 @@ const ManageLearningResources = () => {
                     <button className="btn btn-sm btn-success text-white text-lg">
                       <FaRegEdit />
                     </button>
-                    <button className="btn btn-sm btn-error text-white text-lg">
+                    <button onClick={() => handleDelete(learningResource._id)} className="btn btn-sm btn-error text-white text-lg">
                       <FaRegTrashCan />
                     </button>
                   </td>

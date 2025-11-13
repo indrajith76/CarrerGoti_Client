@@ -41,8 +41,7 @@ const CreateLearningResources = () => {
     };
 
     try {
-
-      const res = await privateAxios.post("/api/Resource", data);
+      const res = await privateAxios.post("/api/resource", data);
       if (res.data.success) {
         toast.success(res.data.message);
         form.reset();
@@ -50,6 +49,7 @@ const CreateLearningResources = () => {
         navigation("/dashboard/ManageLearningResources");
       }
     } catch (error) {
+      toast.error(error.response.data.message);
       console.log(error);
 
     } finally {

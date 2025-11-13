@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { toast } from "sonner";
+import privateAxios from "../../api/privateAxios";
 
 const ManageJobPost = () => {
   const [jobs, setJobs] = useState([]);
@@ -25,7 +27,21 @@ const ManageJobPost = () => {
     fetchJobs();
   }, []);
 
-  console.log(jobs)
+  const handleDelete = async (id) => {
+    const toastId = toast.loading("Deleting...");
+    try {
+      const res = await privateAxios.delete(`/api/jobs/${id}`);
+      if (res.data.success) {
+        setJobs(jobs.filter((job) => job._id !== id));
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    } finally {
+      toast.dismiss(toastId);
+    }
+  };
 
   return (
     <div className="mb-10">
@@ -66,7 +82,7 @@ const ManageJobPost = () => {
                     <button className="btn btn-sm btn-success text-white text-lg">
                       <FaRegEdit />
                     </button>
-                    <button className="btn btn-sm btn-error text-white text-lg">
+                    <button onClick={() => handleDelete(job._id)} className="btn btn-sm btn-error text-white text-lg">
                       <FaRegTrashCan />
                     </button>
                   </td>
