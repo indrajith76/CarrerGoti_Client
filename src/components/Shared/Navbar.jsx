@@ -18,7 +18,7 @@ const Navbar = () => {
             className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
           >
             <li>
-              <Link to={"/"}>Dashboard</Link>
+              <Link to={"/dashboard"}>Dashboard</Link>
             </li>
             <li>
               <Link to={"/"}>Jobs</Link>
@@ -57,7 +57,7 @@ const Navbar = () => {
         </div>
         <ul className="hidden lg:flex items-center gap-5 ">
           <li>
-            <Link to={"/"}>Dashboard</Link>
+            <Link to={"/dashboard"}>Dashboard</Link>
           </li>
           <li>
             <Link to={"/"}>Jobs</Link>

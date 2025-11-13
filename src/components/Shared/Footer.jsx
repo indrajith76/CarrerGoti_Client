@@ -4,7 +4,7 @@ import logo from "../../assets/images/Logo.svg"
 
 const Footer = () => {
     return (
-        <footer className="bg-white dark:bg-gray-900">
+        <footer className="bg-white ">
             <div className="container p-6 mx-auto">
                 <div className="lg:flex">
                     <div className="w-full -mx-6 lg:w-2/5">
@@ -17,7 +17,7 @@ const Footer = () => {
                                 />
                             </a>
 
-                            <p className="max-w-sm mt-2 text-gray-500 dark:text-gray-400">
+                            <p className="max-w-sm mt-2 text-gray-500 ">
                                 Join 31,000+ other and never miss out on new tips, tutorials, and more.
                             </p>
 
