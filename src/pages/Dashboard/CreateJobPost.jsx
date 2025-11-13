@@ -1,7 +1,15 @@
 import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import privateAxios from "../../api/privateAxios";
 
 const CreateJobPost = () => {
-  const CreateJobPostHandler = (e) => {
+  const [loader, setLoader] = useState(false);
+  const navigation = useNavigate();
+
+
+  const CreateJobPostHandler = async (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
@@ -11,7 +19,21 @@ const CreateJobPost = () => {
     const experienceLevel = form.experienceLevel.value;
     const jobType = form.jobType.value;
     const jobDescription = form.jobDescription.value;
-    console.log({
+
+    if (
+      !title ||
+      !company ||
+      !location ||
+      !requiredSkills ||
+      !experienceLevel ||
+      !jobType ||
+      !jobDescription
+    ) {
+      toast.warning("All required fields must be filled!");
+      return;
+    }
+
+    const jobData = {
       title,
       company,
       location,
@@ -19,7 +41,22 @@ const CreateJobPost = () => {
       experienceLevel,
       jobType,
       jobDescription,
-    });
+    }
+    try {
+
+      const res = await privateAxios.post("/api/jobs", jobData);
+      if (res.data.success) {
+        toast.success(res.data.message);
+        form.reset();
+        setLoader(false);
+        navigation("/dashboard/ManageJobPost");
+      }
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      setLoader(false);
+    }
   };
 
 
@@ -114,8 +151,8 @@ const CreateJobPost = () => {
             className="input w-full h-20 border rounded-lg p-1"
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary md:col-span-2">
-          Publish Job Post
+        <button disabled={loader} type="submit" className="btn btn-primary md:col-span-2">
+          {loader ? "Loading..." : "Publish Job Post"}
         </button>
       </form>
     </div>

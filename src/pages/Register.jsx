@@ -70,7 +70,7 @@ const Register = () => {
       email,
       phone,
       password,
-      role,
+      role: role === "Applicant" ? "user" : "organization",
       ...extraData,
     };
 
@@ -256,6 +256,7 @@ const Register = () => {
       {/* Submit */}
       <button
         type="submit"
+        disabled={loader}
         className="btn btn-primary flex items-center mx-auto"
       >
         {loader ? "Loading..." : "Register"}
