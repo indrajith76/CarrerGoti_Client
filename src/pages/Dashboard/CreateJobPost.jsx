@@ -10,7 +10,16 @@ const CreateJobPost = () => {
     const requiredSkills = form.requiredSkills.value;
     const recommendedExperienceLevel = form.recommendedExperienceLevel.value;
     const jobType = form.jobType.value;
-    const jobDescription = form.jobDescription.value; 
+    const jobDescription = form.jobDescription.value;
+    console.log({
+      jobTitle,
+      company,
+      location,
+      requiredSkills,
+      recommendedExperienceLevel,
+      jobType,
+      jobDescription,
+    });
   };
 
   return (

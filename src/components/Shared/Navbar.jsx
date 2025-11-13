@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BsJustifyRight } from "react-icons/bs";
+import useAuth from "../../context/useAuth";
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
   return (
     <div className="shadow">
       <div className="flex items-center justify-between container mx-auto py-2">
@@ -29,7 +31,7 @@ const Navbar = () => {
             <li>
               <Link to={"/"}>Profile</Link>
             </li>
-            {true ? (
+            {!user ? (
               <>
                 <li>
                   <Link to={"/login"}>
@@ -48,7 +50,10 @@ const Navbar = () => {
               </>
             ) : (
               <li>
-                <button className="btn btn-xs text-white btn-error">
+                <button
+                  onClick={logout}
+                  className="btn btn-xs text-white btn-error"
+                >
                   Logout
                 </button>
               </li>
@@ -68,7 +73,8 @@ const Navbar = () => {
           <li>
             <Link to={"/Profile"}>Profile</Link>
           </li>
-          {true ? (
+          {/* Large Screen */}
+          {!user ? (
             <>
               <li>
                 <Link to={"/login"}>
@@ -87,7 +93,10 @@ const Navbar = () => {
             </>
           ) : (
             <li>
-              <button className="btn btn-xs text-white btn-error">
+              <button
+                onClick={logout}
+                className="btn btn-xs text-white btn-error"
+              >
                 Logout
               </button>
             </li>
