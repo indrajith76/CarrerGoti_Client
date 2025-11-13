@@ -13,6 +13,7 @@ import ManageLearningResources from "../pages/Dashboard/ManageLearningResources"
 import ManageAllUsers from "../pages/Dashboard/ManageAllUsers";
 import Jobs from "../pages/jobs";
 import JobDetails from "../pages/JobDetails";
+import Resources from "../pages/Resources";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: "/Profile",
         element: <Profile />,
+      },
+      {
+        path: "/resources",
+        element: <Resources />,
       },
       {
         path: "/jobs",
