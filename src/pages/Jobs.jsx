@@ -4,6 +4,7 @@ import { FaMapMarkerAlt, FaBriefcase, FaUsers, FaSearch, FaBuilding } from "reac
 import { MdOutlineWork } from "react-icons/md";
 import { Link } from "react-router-dom";
 import JobCard from "../components/ui/JobCard";
+import useAuth from "../context/useAuth";
 
 const Jobs = () => {
     const [jobs, setJobs] = useState([]);
@@ -13,9 +14,11 @@ const Jobs = () => {
     const [jobType, setJobType] = useState("");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const { user } = useAuth()
 
     const [searchTrigger, setSearchTrigger] = useState(0);
     const limit = 8;
+
 
     useEffect(() => {
         const fetchJobs = async () => {
