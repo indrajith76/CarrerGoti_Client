@@ -22,7 +22,7 @@ const RoadmapCard = ({ data, setSelectedRoadmap }) => {
       <p className="mt-3 text-gray-600">{data.overview}</p>
       <button
         className="btn btn-sm mt-2 btn-primary"
-        onClick={() => { 
+        onClick={() => {
           setSelectedRoadmap(data);
           document.getElementById("my_modal_3").showModal();
         }}
