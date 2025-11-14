@@ -1,15 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useAuth from "../context/useAuth";
 import pdfToText from "react-pdftotext";
+import { toast } from "sonner";
+import axios from "../api/axios";
+import cleanAndParseJson from "../utils/cleanParseJson";
 
 export default function Profile() {
   const { user } = useAuth();
 
   const [mode, setMode] = useState("pdf");
+  const [loader, setLoader] = useState(false);
+  const [generateData, setGenerateData] = useState(null);
 
-  // Skills
   const [skill, setSkill] = useState("");
   const [skills, setSkills] = useState(user?.skills || []);
+
+  const [experience, setExperience] = useState({
+    jobTitle: "",
+    companyName: "",
+    duration: "",
+    jobDesc: "",
+  });
+  const [allExperience, setAllExperience] = useState(user?.experienceList || []);
+
+  const [project, setProject] = useState({ projectTitle: "", projectDesc: "" });
+  const [allProject, setAllProject] = useState(user?.projects || []);
+
+  const mergedData = generateData || user || {};
+
+  useEffect(() => {
+    if (generateData) {
+      setSkills(generateData.skills || []);
+      setAllExperience(generateData.experienceList || []);
+      setAllProject(generateData.projects || []);
+    }
+  }, [generateData]);
 
   const addSkill = () => {
     if (skill.trim() === "") return;
@@ -21,17 +46,6 @@ export default function Profile() {
     setSkills(skills.filter((_, i) => i !== index));
   };
 
-  // Experience
-  const [experience, setExperience] = useState({
-    jobTitle: "",
-    companyName: "",
-    duration: "",
-    jobDesc: "",
-  });
-  const [allExperience, setAllExperience] = useState(
-    user?.experienceList || []
-  );
-
   const addExperience = () => {
     setAllExperience([...allExperience, experience]);
     setExperience({ jobTitle: "", companyName: "", duration: "", jobDesc: "" });
@@ -40,10 +54,6 @@ export default function Profile() {
   const removeExperience = (index) => {
     setAllExperience(allExperience.filter((_, i) => i !== index));
   };
-
-  // Projects
-  const [project, setProject] = useState({ projectTitle: "", projectDesc: "" });
-  const [allProject, setAllProject] = useState(user?.projects || []);
 
   const addProject = () => {
     setAllProject([...allProject, project]);
@@ -54,32 +64,77 @@ export default function Profile() {
     setAllProject(allProject.filter((_, i) => i !== index));
   };
 
-  // Final Save
   const saveAllInfo = () => {
     const finalData = {
-      name: user?.name || "",
-      email: user?.email || "",
-      phone: user?.phone || "",
-      educationLevel: user?.educationLevel || "",
-      preferredCareerTrack: user?.preferredCareerTrack || "",
-      experience: user?.experience || "",
-      image: user?.image || null,
+      name: mergedData.name || "",
+      email: mergedData.email || "",
+      phone: mergedData.phone || "",
+      educationLevel: mergedData.educationLevel || "",
+      preferredCareerTrack: mergedData.preferredCareerTrack || "",
+      experience: mergedData.experience || [],
+      image: mergedData.image || null,
       skills,
       experienceList: allExperience,
       projects: allProject,
     };
-
     console.log("Saved:", finalData);
+    toast.success("Profile saved successfully!");
   };
 
-  function extractText(event) {
-    const file = event.target.files[0];
+  const extractText = async (event) => {
+    event.preventDefault();
+    setLoader(true);
+    const file = event.target.elements.file.files[0];
+    if (!file) {
+      toast.error("No file selected!");
+      setLoader(false);
+      return;
+    }
+
     pdfToText(file)
-      .then((text) => console.log(text))
-      .catch((error) =>
-        console.error("Failed to extract text from pdf", error)
-      );
-  }
+      .then(async (text) => {
+        const prompt = `Extract structured user profile data from this resume text. Respond ONLY with a json data exactly in this format: { name: "", email: "", phone: "", educationLevel: "", preferredCareerTrack: "", skills: [], experience: [{jobTitle:"", companyName:"", duration:"", jobDesc:""}], experienceList: [{jobTitle:"", companyName:"", duration:"", jobDesc:""}], projects: [{projectTitle:"", projectDesc:""}], image: null }. If data exists, fill it. If not, use null for fields or empty arrays for lists. Do not add extra fields, comments, or explanation. Resume text: "${text}"`;
+
+        try {
+          const res = await axios.post("/api/generate", { prompt });
+          const data = cleanAndParseJson(res.data.data);
+          console.log(data);
+          setGenerateData(data);
+          document.getElementById('profile_modal_1').close();
+        } catch (error) {
+          console.error(error);
+          toast.error("Failed to extract text from pdf");
+        } finally {
+          setLoader(false);
+        }
+      })
+      .catch((error) => {
+        toast.error("Failed to extract text from pdf");
+        console.log(error);
+        setLoader(false);
+      });
+  };
+
+  const hanleResumeTextToData = async (event) => {
+    event.preventDefault();
+    setLoader(true);
+    const text = event.target.elements.text.value.trim();
+
+    const prompt = `Extract structured user profile data from this resume text. Respond ONLY with a json data exactly in this format: { name: "", email: "", phone: "", educationLevel: "", preferredCareerTrack: "", skills: [], experience: [{jobTitle:"", companyName:"", duration:"", jobDesc:""}], experienceList: [{jobTitle:"", companyName:"", duration:"", jobDesc:""}], projects: [{projectTitle:"", projectDesc:""}], image: null }. If data exists, fill it. If not, use null for fields or empty arrays for lists. Do not add extra fields, comments, or explanation. Resume text: "${text}"`;
+
+    try {
+      const res = await axios.post("/api/generate", { prompt });
+      const data = cleanAndParseJson(res.data.data);
+      console.log(data);
+      setGenerateData(data);
+      document.getElementById('profile_modal_1').close();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to extract text from pdf");
+    } finally {
+      setLoader(false);
+    }
+  };
 
   return (
     <div className="my-5">
@@ -103,17 +158,13 @@ export default function Profile() {
 
             <div className="flex justify-center mt-4 mb-6 gap-3">
               <button
-                className={`btn ${
-                  mode === "pdf" ? "btn-primary" : "btn-outline"
-                }`}
+                className={`btn ${mode === "pdf" ? "btn-primary" : "btn-outline"}`}
                 onClick={() => setMode("pdf")}
               >
                 PDF Upload
               </button>
               <button
-                className={`btn ${
-                  mode === "text" ? "btn-primary" : "btn-outline"
-                }`}
+                className={`btn ${mode === "text" ? "btn-primary" : "btn-outline"}`}
                 onClick={() => setMode("text")}
               >
                 Text Input
@@ -121,28 +172,35 @@ export default function Profile() {
             </div>
 
             {mode === "pdf" && (
-              <div className="my-5 flex w-full gap-3 items-center">
+              <form
+                onSubmit={extractText}
+                className="my-5 flex w-full gap-3 items-center"
+              >
                 <input
-                  onChange={extractText}
                   type="file"
                   accept="application/pdf"
+                  name="file"
                   className="file-input file-input-bordered file-input-primary w-full"
                 />
-                <button className="btn btn-primary">Analyze PDF</button>
-              </div>
+                <button disabled={loader} type="submit" className="btn btn-primary">
+                  {loader ? "Loading..." : "Analyze PDF"}
+                </button>
+              </form>
             )}
 
             {mode === "text" && (
-              <div>
+              <form
+                onSubmit={hanleResumeTextToData}>
                 <p className="text-center">-------- or ---------</p>
                 <div className="my-5 flex gap-3 items-center">
                   <textarea
+                    name="text"
                     className="textarea textarea-bordered w-full h-40"
                     placeholder="Paste Your CV Text Content"
                   ></textarea>
-                  <button className="btn btn-primary">Analyze Text</button>
+                  <button disabled={loader} className="btn btn-primary">{loader ? "Loading..." : "Analyze Text"}</button>
                 </div>
-              </div>
+              </form>
             )}
           </div>
         </dialog>
@@ -153,7 +211,7 @@ export default function Profile() {
         <img
           className="w-28 mx-auto rounded-full"
           src={
-            user?.image ||
+            mergedData.image ||
             "https://www.cielhr.com/wp-content/uploads/2020/10/dummy-image.jpg"
           }
         />
@@ -161,18 +219,15 @@ export default function Profile() {
         <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-5">
           {/* Pre-filled Inputs */}
           {[
-            { label: "Full Name", value: user?.name },
-            { label: "Email", value: user?.email },
-            { label: "Education Level", value: user?.educationLevel },
-            { label: "Experience Level", value: user?.experience },
-            {
-              label: "Preferred Career Track",
-              value: user?.preferredCareerTrack,
-            },
-          ].map((item, i) => (
-            <div className="my-5" key={i}>
+            { label: "Full Name", key: "name" },
+            { label: "Email", key: "email" },
+            { label: "Education Level", key: "educationLevel" },
+            { label: "Experience Level", key: "experience" },
+            { label: "Preferred Career Track", key: "preferredCareerTrack" },
+          ].map((item) => (
+            <div className="my-5" key={item.key}>
               <label className="block">{item.label}</label>
-              <input defaultValue={item.value} className="input w-full" />
+              <input defaultValue={mergedData[item.key] || ""} className="input w-full" />
             </div>
           ))}
 
@@ -215,7 +270,7 @@ export default function Profile() {
                 <div className="p-3 border rounded-lg" key={i}>
                   <strong>{exp.jobTitle}</strong>
                   <p>{exp.companyName}</p>
-                  <p>{exp.duration} months</p>
+                  <p>{exp.duration}</p>
                   <small>{exp.jobDesc}</small>
                   <button
                     className="btn btn-xs btn-error mt-2"
@@ -230,26 +285,20 @@ export default function Profile() {
 
           {/* Experience Inputs */}
           <div className="md:col-span-3 grid grid-cols-3 gap-3">
-            {[
-              { key: "jobTitle", label: "Job Title" },
-              { key: "companyName", label: "Company Name" },
-              { key: "duration", label: "Duration (months)" },
-            ].map((field) => (
+            {[{ key: "jobTitle", label: "Job Title" },
+            { key: "companyName", label: "Company Name" },
+            { key: "duration", label: "Duration" }].map((field) => (
               <div key={field.key}>
                 <label>{field.label}</label>
                 <input
                   className="input w-full"
                   value={experience[field.key]}
                   onChange={(e) =>
-                    setExperience({
-                      ...experience,
-                      [field.key]: e.target.value,
-                    })
+                    setExperience({ ...experience, [field.key]: e.target.value })
                   }
                 />
               </div>
             ))}
-
             <div className="col-span-3">
               <label>Description</label>
               <textarea
@@ -261,12 +310,11 @@ export default function Profile() {
               ></textarea>
             </div>
           </div>
-
           <button className="btn md:col-span-3" onClick={addExperience}>
             Add Experience
           </button>
 
-          {/* Projects */}
+          {/* Projects Section */}
           <h3 className="text-xl md:col-span-3">Projects</h3>
           <hr className="md:col-span-3" />
 
@@ -297,7 +345,6 @@ export default function Profile() {
                 setProject({ ...project, projectTitle: e.target.value })
               }
             />
-
             <label className="mt-3 block">Project Description</label>
             <textarea
               className="textarea w-full"
@@ -307,7 +354,6 @@ export default function Profile() {
               }
             ></textarea>
           </div>
-
           <button className="btn md:col-span-3" onClick={addProject}>
             Add Project
           </button>
