@@ -5,6 +5,7 @@ import { MdOutlineWork } from "react-icons/md";
 import { Link } from "react-router-dom";
 import JobCard from "../components/ui/JobCard";
 import useAuth from "../context/useAuth";
+import getMatchPercentage from "../utils/getMatchPercentage ";
 
 const Jobs = () => {
     const [jobs, setJobs] = useState([]);
@@ -37,6 +38,17 @@ const Jobs = () => {
 
         fetchJobs();
     }, [searchTrigger, page]);
+
+
+    const sortedJobs = [...jobs].sort((a, b) => {
+        if (!user) return 0; // no sorting when logged out
+
+        const aMatch = getMatchPercentage(a.requiredSkills, user.skills || []);
+        const bMatch = getMatchPercentage(b.requiredSkills, user.skills || []);
+
+        return bMatch - aMatch; // descending order
+    });
+
 
     const handleSearch = () => {
         setPage(1);
@@ -106,9 +118,10 @@ const Jobs = () => {
 
             {/* Jobs Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {jobs.map((job) => (
+                {sortedJobs.map(job => (
                     <JobCard key={job._id} job={job} />
                 ))}
+
             </div>
 
             {/* Pagination */}
