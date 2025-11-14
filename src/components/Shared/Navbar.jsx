@@ -35,9 +35,7 @@ const Navbar = () => {
             <li>
               <Link to={"/RoadMaps"}>RoadMaps</Link>
             </li>
-            <li>
-              <Link to={"/ProfileAssistant"}>ProfileAssistant</Link>
-            </li>
+
             {!user ? (
               <>
                 <li>
@@ -74,14 +72,15 @@ const Navbar = () => {
                     <Link to={"/Profile"}>Profile</Link>
                   </li>
                   <li>
-                    <li>
-                      <button
-                        onClick={logout}
-                        className="btn btn-xs text-white btn-error"
-                      >
-                        Logout
-                      </button>
-                    </li>
+                    <Link to={"/ProfileAssistant"}>ProfileAssistant</Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={logout}
+                      className="btn btn-xs text-white btn-error"
+                    >
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -102,10 +101,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link to={"/RoadMaps"}>RoadMaps</Link>
-          </li>
-          <li>
-            <Link to={"/ProfileAssistant"}>ProfileAssistant</Link>
-          </li>
+          </li> 
 
           {!user ? (
             <>
@@ -138,20 +134,21 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex="-1"
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow gap-2"
                 >
                   <li>
                     <Link to={"/Profile"}>Profile</Link>
                   </li>
                   <li>
-                    <li>
-                      <button
-                        onClick={logout}
-                        className="btn btn-xs text-white btn-error"
-                      >
-                        Logout
-                      </button>
-                    </li>
+                    <Link to={"/ProfileAssistant"}>ProfileAssistant</Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={logout}
+                      className="btn btn-xs text-white btn-error"
+                    >
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>
