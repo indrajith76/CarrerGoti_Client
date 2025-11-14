@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { BsJustifyRight } from "react-icons/bs";
 import useAuth from "../../context/useAuth";
+import logo from "../../assets/images/Logo.svg";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -10,7 +11,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between container mx-auto py-2">
         <div>
           <Link to="/">
-            <img className="w-[50%]" src="/src/assets/images/Logo.svg" alt="" />
+            <img className="w-[50%]" src={logo} alt="" />
           </Link>
         </div>
         <div className="dropdown dropdown-end lg:hidden">
