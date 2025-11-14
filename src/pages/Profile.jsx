@@ -89,7 +89,7 @@ export default function Profile() {
         login(token, newData);
         toast.success("Profile updated successfully!");
         setLoader(false);
-        navigation("/Profile");
+        navigation("/Profile", { replace: true });
       }
     } catch (error) {
       console.error(error);
@@ -118,12 +118,14 @@ export default function Profile() {
           setGenerateData(data);
           document.getElementById('profile_modal_1').close();
         } catch (error) {
+          console.error(error);
           toast.error("Failed to extract text from pdf");
         } finally {
           setLoader(false);
         }
       })
       .catch((error) => {
+        console.error(error);
         toast.error("Failed to extract text from pdf");
         setLoader(false);
       });
