@@ -14,6 +14,7 @@ import Jobs from "../pages/jobs";
 import JobDetails from "../pages/JobDetails";
 import Resources from "../pages/Resources";
 import Root from "../layouts/root";
+import TestingUI from "../pages/TestingUI";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "/jobs/:id",
         element: <JobDetails />,
+      },
+      {
+        path: "/Test",
+        element: <TestingUI/>,
       },
     ],
   },
