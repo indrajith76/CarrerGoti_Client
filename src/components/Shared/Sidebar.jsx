@@ -10,7 +10,6 @@ const Sidebar = () => {
         className="drawer-overlay"
       ></label>
       <ul className="menu bg-base-200 min-h-full w-80 p-4">
-        {/* Sidebar content here */}
         <li>
           <Link to="/dashboard/CreateJobPost">Create Job Post</Link>
         </li>
@@ -25,6 +24,15 @@ const Sidebar = () => {
         </li>
         <li>
           <Link to="/dashboard/ManageAllUsers">Manage All Users</Link>
+        </li>
+        <li>
+          <Link to="/jobs">Explore Jobs</Link>
+        </li>
+        <li>
+          <Link to="/resources">Explore Resources</Link>
+        </li>
+        <li>
+          <Link to="/Profile">Profile Manage</Link>
         </li>
       </ul>
     </div>
