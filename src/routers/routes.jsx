@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom"; 
+import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -16,6 +16,7 @@ import Resources from "../pages/Resources";
 import Root from "../layouts/root";
 import TestingUI from "../pages/TestingUI";
 import RoadMaps from "../pages/RoadMaps";
+import ProfileAssistant from "../pages/ProfileAssistant/ProfileAssistant";
 
 export const router = createBrowserRouter([
   {
@@ -47,8 +48,12 @@ export const router = createBrowserRouter([
         element: <RoadMaps />,
       },
       {
+        path: "/ProfileAssistant",
+        element: <ProfileAssistant />,
+      },
+      {
         path: "/Test",
-        element: <TestingUI/>,
+        element: <TestingUI />,
       },
     ],
   },

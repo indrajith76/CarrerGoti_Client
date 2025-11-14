@@ -41,12 +41,12 @@ const Jobs = () => {
 
 
     const sortedJobs = [...jobs].sort((a, b) => {
-        if (!user) return 0; // no sorting when logged out
+        if (!user) return 0;
 
         const aMatch = getMatchPercentage(a.requiredSkills, user.skills || []);
         const bMatch = getMatchPercentage(b.requiredSkills, user.skills || []);
 
-        return bMatch - aMatch; // descending order
+        return bMatch - aMatch;
     });
 
 

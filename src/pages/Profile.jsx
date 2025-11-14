@@ -247,7 +247,7 @@ export default function Profile() {
         {/* EXPERIENCE */}
         <div className="mt-12">
           <h3 className="text-xl font-bold text-primary">Experience</h3>
-          <div className="grid grid-cols-3 gap-3 mt-4">
+          <div className="grid md:grid-cols-3 gap-3 mt-4">
             {allExperience.map((exp, i) => (
               <div key={i} className="bg-base-200 p-4 rounded-xl shadow border border-primary/10">
                 <strong className="text-primary">{exp.jobTitle}</strong>
@@ -276,7 +276,7 @@ export default function Profile() {
         <div className="mt-12">
           <h3 className="text-xl font-bold text-primary">Projects</h3>
 
-          <div className="grid grid-cols-3 gap-3 mt-4">
+          <div className="grid md:grid-cols-3 gap-3 mt-4">
             {allProject.map((p, i) => (
               <div key={i} className="bg-base-200 p-4 rounded-xl shadow border border-primary/10">
                 <strong className="text-primary">{p.projectTitle}</strong>
