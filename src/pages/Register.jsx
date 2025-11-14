@@ -50,7 +50,7 @@ const Register = () => {
       }
       extraData = {
         educationLevel: form.education.value.trim(),
-        experience: form.experience.value.trim(),
+        experienceLabel: form.experience.value.trim(),
         preferredCareerTrack: form.career.value.trim(),
       };
     } else if (role === "Organization") {
