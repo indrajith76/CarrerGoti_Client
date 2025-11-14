@@ -4,7 +4,7 @@ import logo from "../../assets/images/Logo.svg"
 
 const Footer = () => {
     return (
-        <footer className="bg-white ">
+        <footer className="bg-white border-0 border-t border-gray-300">
             <div className="container p-6 mx-auto">
                 <div className="lg:flex">
                     <div className="w-full -mx-6 lg:w-2/5">

@@ -7,7 +7,7 @@ import logo from "../../assets/images/Logo.svg";
 const Navbar = () => {
   const { user, logout } = useAuth();
   return (
-    <div className="shadow">
+    <div className="shadow border-0 border-b border-gray-300">
       <div className="flex items-center justify-between container mx-auto py-2">
         <div>
           <Link to="/">
@@ -30,6 +30,9 @@ const Navbar = () => {
             </li>
             <li>
               <Link to={"/resources"}>Resources</Link>
+            </li>
+            <li>
+              <Link to={"/RoadMaps"}>RoadMaps</Link>
             </li>
             <li>
               <Link to={"/"}>Profile</Link>
@@ -72,6 +75,9 @@ const Navbar = () => {
           </li>
           <li>
             <Link to={"/resources"}>Resources</Link>
+          </li>
+          <li>
+            <Link to={"/RoadMaps"}>RoadMaps</Link>
           </li>
           <li>
             <Link to={"/Profile"}>Profile</Link>
