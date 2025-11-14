@@ -1,8 +1,12 @@
 import React from "react";
 
-const ResumeTemp2 = ({ user }) => {
+const ResumeTemp2 = ({ user, targetRef }) => {
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white border border-gray-200 shadow-lg rounded-lg">
+    <div
+      id="print-section"
+      ref={targetRef}
+      className="max-w-3xl mx-auto p-6 bg-white border border-gray-200 shadow-lg rounded-lg"
+    >
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-3xl font-bold text-blue-700">{user?.name}</h1>

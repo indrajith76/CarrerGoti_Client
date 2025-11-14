@@ -1,8 +1,12 @@
 import React from "react";
 
-const ResumeTemp3 = ({ user }) => {
+const ResumeTemp3 = ({ user, targetRef }) => {
   return (
-    <div className="max-w-4xl mx-auto bg-white border p-6 shadow-md flex">
+    <div
+      id="print-section"
+      ref={targetRef}
+      className="max-w-4xl mx-auto bg-white border p-6 shadow-md flex"
+    >
       {/* Left Column */}
       <div className="w-1/3 pr-4 border-r border-gray-200">
         {user?.image && (
