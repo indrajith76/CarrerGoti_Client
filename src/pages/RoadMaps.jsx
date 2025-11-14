@@ -7,6 +7,7 @@ const RoadMaps = () => {
   const [description, setDescription] = useState("");
   const [keyword, setKeyword] = useState("");
   const [keywords, setKeywords] = useState([]);
+  const [selectedRoadmap, setSelectedRoadmap] = useState(null);
 
   const addKeyword = () => {
     if (keyword.trim() === "" || keywords.includes(keyword.trim())) return;
@@ -331,7 +332,10 @@ const RoadMaps = () => {
 
       <div className="md:flex gap-5 w-full">
         {/* sidebar & from */}
-        <form onSubmit={handleSubmit} className="md:sticky top-0 md:h-screen space-y-5 md:w-[30%] lg:w-[25%] p-5 md:border-r border-gray-300">
+        <form
+          onSubmit={handleSubmit}
+          className="md:sticky top-0 md:h-screen space-y-5 md:w-[30%] lg:w-[25%] p-5 md:border-r border-gray-300"
+        >
           <h4 className="text-xl text-primary font-bold">Generate Road Maps</h4>
           {/* Select Inputs */}
           <div className="grid grid-cols-1 gap-4">
@@ -401,7 +405,6 @@ const RoadMaps = () => {
             </div>
           </div>
 
-          {/* Keywords Input */}
           <div className="flex flex-col">
             <label className="text-primary font-semibold mb-1">Keywords</label>
             <div className="flex gap-2">
@@ -435,7 +438,6 @@ const RoadMaps = () => {
             )}
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="btn btn-primary w-full hover:btn-secondary shadow-lg transition"
@@ -449,12 +451,102 @@ const RoadMaps = () => {
             Road Maps
           </h2>
           <div className="grid grid-cols-1 gap-5">
-          {defaultRoadMaps.map((roadmap) => (
-              <RoadmapCard data={roadmap} />
+            {defaultRoadMaps.map((roadmap) => (
+              <RoadmapCard 
+              data={roadmap}
+              setSelectedRoadmap={setSelectedRoadmap}
+            />
+            
             ))}
-            </div>
+          </div>
         </div>
       </div>
+
+      {/* Details Modal */}
+      <dialog id="my_modal_3" className="modal">
+  <div className="modal-box max-h-[90vh] overflow-y-auto border border-primary/20 shadow-xl rounded-xl">
+    
+    {/* Close Button */}
+    <form method="dialog">
+      <button
+        onClick={() => setSelectedRoadmap(null)}
+        className="btn btn-sm btn-circle btn-ghost absolute right-3 top-3 hover:bg-primary hover:text-white transition"
+      >
+        ✕
+      </button>
+    </form>
+
+    {selectedRoadmap ? (
+      <>
+        {/* Title */}
+        <h3 className="font-bold text-2xl text-primary mb-2">
+          {selectedRoadmap.role}
+        </h3>
+
+        {/* Duration Info */}
+        <p className="text-sm text-gray-500">
+          <span className="text-primary font-semibold">Duration:</span>{" "}
+          {selectedRoadmap.duration} 
+          {"  |  "}
+          <span className="text-primary font-semibold">Weekly:</span>{" "}
+          {selectedRoadmap.weeklyHours}
+        </p>
+
+        {/* Overview */}
+        <p className="mt-4 leading-relaxed text-gray-700">
+          {selectedRoadmap.overview}
+        </p>
+
+        {/* Skills */}
+        <div className="mt-6">
+          <h4 className="font-semibold text-primary text-lg">
+            Required Skills
+          </h4>
+
+          <div className="flex flex-wrap gap-2 mt-2">
+            {selectedRoadmap.skills.map((s, i) => (
+              <span
+                key={i}
+                className="badge badge-sm badge-primary badge-outline p-3 rounded-lg text-primary border-primary"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Roadmap */}
+        <div className="mt-8">
+          <h4 className="font-semibold text-primary text-lg mb-3">
+            Full Roadmap
+          </h4>
+
+          {selectedRoadmap.roadmap.map((month, index) => (
+            <div
+              key={index}
+              className="border border-primary/30 p-4 rounded-lg mb-4 shadow-sm bg-base-100"
+            >
+              <h5 className="font-bold text-primary">
+                Month {month.month}: {month.title}
+              </h5>
+
+              <p className="text-gray-600 mt-1 text-sm">{month.summary}</p>
+
+              <ul className="list-disc ml-5 mt-2 space-y-1 text-gray-700">
+                {month.tasks.map((task, tIndex) => (
+                  <li key={tIndex}>{task}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </>
+    ) : (
+      <p className="text-center mt-10 text-primary">Loading...</p>
+    )}
+  </div>
+</dialog>
+
     </div>
   );
 };
