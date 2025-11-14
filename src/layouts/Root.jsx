@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "../components/Shared/Footer";
 import Navbar from "../components/Shared/Navbar";
 import useAuth from "../context/useAuth";
+import ChatWidget from "../components/Shared/ChatWidget";
 
 const Root = () => {
   const { loading } = useAuth();
@@ -11,7 +12,7 @@ const Root = () => {
       <div className="min-h-screen min-w-screen flex justify-center items-center">
         <p>Loading...</p>
       </div>
-    )
+    );
   }
   return (
     <>
@@ -20,6 +21,7 @@ const Root = () => {
         <Outlet />
       </main>
       <Footer />
+      <ChatWidget />
     </>
   );
 };
