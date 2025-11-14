@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FiArrowRight } from "react-icons/fi";
+import axios from "../../api/axios";
 
 export default function ChatWidget({
   title = "Chat with us",
@@ -10,38 +11,66 @@ export default function ChatWidget({
     { id: 1, from: "bot", text: "Hi there! How can I help you today?" },
   ]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const messagesRef = useRef(null);
 
   useEffect(() => {
-    // auto-scroll to bottom when messages change
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }
   }, [messages, open]);
 
-  function sendMessage() {
+  const sendMessage = async () => {
     const trimmed = input.trim();
-    if (!trimmed) return;
+    if (!trimmed || loading) return;
 
+    // User Message
     const userMsg = { id: Date.now(), from: "user", text: trimmed };
     setMessages((m) => [...m, userMsg]);
     setInput("");
 
-    // fake bot reply (replace with API call)
-    setTimeout(() => {
+    setLoading(true);
+
+    // Bot typing bubble
+    setMessages((m) => [
+      ...m,
+      { id: "typing", from: "bot", text: "..." },
+    ]);
+
+    try {
+      const res = await axios.post("/api/generate/bot", { prompt: trimmed });
+
+
+
+      const botText = res?.data?.data || "Sorry, I couldn't process that.";
+
+      setMessages((m) => m.filter((msg) => msg.id !== "typing"));
+
+
       setMessages((m) => [
         ...m,
-        { id: Date.now() + 1, from: "bot", /* text: `You said: ${trimmed}` */ },
+        { id: Date.now() + 1, from: "bot", text: botText },
       ]);
-    }, 700);
-  }
 
-  function handleKeyDown(e) {
+    } catch (error) {
+      console.error(error);
+      setMessages((m) => m.filter((msg) => msg.id !== "typing"));
+      setMessages((m) => [
+        ...m,
+        { id: Date.now() + 1, from: "bot", text: "Something went wrong. Try again." },
+      ]);
+    }
+
+    setLoading(false);
+  };
+
+  const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
-  }
+  };
 
   return (
     <div className="fixed inset-0 pointer-events-none">
@@ -50,9 +79,8 @@ export default function ChatWidget({
         <button
           aria-label={open ? "Close chat" : "Open chat"}
           onClick={() => setOpen((s) => !s)}
-          className="w-14 h-14 rounded-full bg-primary shadow-lg flex items-center justify-center text-white hover:bg-primary focus:outline-none focus:ring-4 focus:ring-primary transition-transform transform-gpu"
+          className="w-14 h-14 rounded-full bg-primary shadow-lg flex items-center justify-center text-white hover:bg-primary focus:outline-none focus:ring-4 focus:ring-primary transition-transform"
         >
-          {/* Chat icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-7 w-7"
@@ -70,16 +98,14 @@ export default function ChatWidget({
         </button>
       </div>
 
-      {/* Chat panel */}
+      {/* Chat Panel */}
       <div
-        className={`fixed bottom-24 right-6 z-40 pointer-events-auto transform transition-all duration-300 ease-out ${
-          open
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-6 pointer-events-none"
-        }`}
+        className={`fixed bottom-24 right-6 z-40 pointer-events-auto transform transition-all duration-300 ease-out ${open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none"
+          }`}
         style={{ minWidth: 320, maxWidth: 420 }}
       >
         <div className="flex flex-col bg-white rounded-2xl shadow-2xl overflow-hidden ring-1 ring-black/5">
+
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
             <div className="flex items-center gap-3">
@@ -89,10 +115,11 @@ export default function ChatWidget({
               <div className="flex flex-col">
                 <span className="font-medium text-sm">{title}</span>
                 <span className="text-xs text-gray-500">
-                  Typically replies in a few minutes
+                  Typically replies in seconds
                 </span>
               </div>
             </div>
+
             <div className="flex items-center gap-2">
               <button
                 onClick={() =>
@@ -105,10 +132,10 @@ export default function ChatWidget({
                   ])
                 }
                 className="text-xs px-2 py-1 rounded-md border border-gray-200 bg-gray-50 hover:bg-gray-100"
-                title="Reset chat"
               >
                 Reset
               </button>
+
               <button
                 onClick={() => setOpen(false)}
                 className="p-2 rounded-md hover:bg-gray-100"
@@ -122,11 +149,7 @@ export default function ChatWidget({
                   stroke="currentColor"
                   strokeWidth={2}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -140,16 +163,13 @@ export default function ChatWidget({
             {messages.map((m) => (
               <div
                 key={m.id}
-                className={`flex ${
-                  m.from === "user" ? "justify-end" : "justify-start"
-                }`}
+                className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`${
-                    m.from === "user"
-                      ? "bg-primary text-white rounded-xl rounded-br-none"
-                      : "bg-gray-100 text-gray-800 rounded-xl rounded-bl-none"
-                  } px-3 py-2 max-w-[80%]`}
+                  className={`${m.from === "user"
+                    ? "bg-primary text-white rounded-xl rounded-br-none"
+                    : "bg-gray-100 text-gray-800 rounded-xl rounded-bl-none"
+                    } px-3 py-2 max-w-[80%]`}
                 >
                   <div className="whitespace-pre-wrap text-sm">{m.text}</div>
                 </div>
@@ -157,7 +177,7 @@ export default function ChatWidget({
             ))}
           </div>
 
-          {/* Input area */}
+          {/* Input */}
           <div className="px-3 py-3 border-t border-gray-100 bg-white">
             <div className="flex gap-2 items-end">
               <textarea
@@ -167,24 +187,25 @@ export default function ChatWidget({
                 onKeyDown={handleKeyDown}
                 className="flex-1 resize-none min-h-[38px] max-h-32 px-3 py-2 text-sm rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200"
               />
+
               <button
                 onClick={sendMessage}
+                disabled={input.trim() === "" || loading}
                 className="inline-flex items-center justify-center px-4 py-2 rounded-md bg-primary text-white font-medium hover:bg-primary disabled:opacity-60"
-                disabled={input.trim() === ""}
-                aria-label="Send message"
               >
-                <FiArrowRight/>
+                {loading ? (
+                  <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <FiArrowRight />
+                )}
               </button>
             </div>
           </div>
         </div>
 
-        {/* small tail on the chat panel for visual */}
+        {/* Tail */}
         <div className="w-full flex justify-end -mt-2 pr-6">
-          <div
-            className="w-6 h-6 bg-white rotate-45 shadow-sm"
-            style={{ transformOrigin: "center" }}
-          />
+          <div className="w-6 h-6 bg-white rotate-45 shadow-sm" />
         </div>
       </div>
     </div>
