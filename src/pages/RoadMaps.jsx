@@ -5,6 +5,7 @@ import cleanAndParseJson from "../utils/cleanParseJson";
 import { toast } from "sonner";
 import useAuth from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
+import { ImSpinner2 } from "react-icons/im";
 
 const RoadMaps = () => {
   const [targetPosition, setTargetPosition] = useState("");
@@ -172,10 +173,10 @@ const RoadMaps = () => {
 
             {/* Submit */}
             <button
-              type="submit"
+              type={loader ? "button" : "submit"}
               className="btn btn-primary w-full shadow-lg hover:shadow-xl hover:bg-primary/90 transition"
             >
-              {loader ? "loading..." : "Generate Roadmap"}
+              {loader ? <ImSpinner2 className='animate-spin' /> : "Generate Roadmap"}
             </button>
           </form>
         </div>

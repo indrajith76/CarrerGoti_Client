@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import axios from "../api/axios";
 import cleanAndParseJson from "../utils/cleanParseJson";
 import { Navigate, useNavigate } from "react-router-dom";
+import { ImSpinner2 } from "react-icons/im";
 
 export default function Profile() {
   const { user, token, login } = useAuth();
@@ -302,15 +303,15 @@ export default function Profile() {
           {mode === "pdf" && (
             <form onSubmit={extractText} className="flex gap-3 items-center">
               <input type="file" accept="application/pdf" name="file" className="file-input file-input-primary w-full" />
-              <button disabled={loader} className="btn btn-primary">{loader ? "Loading..." : "Analyze"}</button>
+              <button disabled={loader} className="btn btn-primary">{loader ? <ImSpinner2 className='animate-spin' /> : "Analyze"}</button>
             </form>
           )}
 
           {/* TEXT Upload */}
           {mode === "text" && (
             <form onSubmit={handleResumeTextToData}>
-              <textarea name="text" placeholder="Paste Resume Text" className="textarea textarea-primary w-full h-40"></textarea>
-              <button disabled={loader} className="btn btn-primary w-full mt-3">{loader ? "Loading..." : "Analyze"}</button>
+              <textarea name="text" placeholder="Paste Resume Text" className="textarea textarea-primary w-full h-40" required></textarea>
+              <button disabled={loader} className="btn btn-primary w-full mt-3">{loader ? <ImSpinner2 className='animate-spin' /> : "Analyze"}</button>
             </form>
           )}
         </div>
