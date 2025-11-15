@@ -4,6 +4,7 @@ import axios from "../api/axios";
 import useAuth from "../context/useAuth";
 import { toast } from "sonner";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import logo from "../assets/images/logoicon.svg"
 
 const Login = () => {
   const [loader, setLoader] = useState(false);
@@ -43,7 +44,7 @@ const Login = () => {
       >
         {/* Logo */}
         <img
-          src="/src/assets/images/logoicon.svg"
+          src={logo}
           className="w-20 mx-auto mb-1"
         />
 

@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import axios from "../api/axios";
 import useAuth from "../context/useAuth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import logo from "../assets/images/logoicon.svg";
 
 const Register = () => {
   const [role, setRole] = useState("Applicant");
@@ -97,7 +98,7 @@ const Register = () => {
       <title>register</title>
       <img
         className="flex items-center mx-auto mb-4 w-20"
-        src="/src/assets/images/logoicon.svg"
+        src={logo}
         alt="Logo"
       />
 
