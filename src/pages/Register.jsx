@@ -3,25 +3,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "../api/axios";
 import useAuth from "../context/useAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const [role, setRole] = useState("Applicant");
   const [loader, setLoader] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
-  const navigation = useNavigate();
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoader(true);
 
     const form = e.target;
-
     const name = form.fullname.value.trim();
     const email = form.email.value.trim();
     const phone = form.Mobile.value.trim();
     const password = form.password.value.trim();
-
 
     let extraData = {};
 
@@ -32,7 +31,7 @@ const Register = () => {
     }
 
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=<>?{}[\]~])[A-Za-z\d!@#$%^&*()_\-+=<>?{}[\]~]{6,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=<>?{}[\]~]).{6,}$/;
 
     if (!passwordRegex.test(password)) {
       toast.error(
@@ -75,64 +74,63 @@ const Register = () => {
     };
 
     try {
-
       const res = await axios.post("/api/auth/register", data);
       if (res.data.success) {
         login(res.data.data.token, res.data.data);
         toast.success(res.data.message);
         form.reset();
-        setLoader(false);
-        navigation("/");
+        navigate("/");
       }
     } catch (error) {
-      console.log(error);
-
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Something went wrong!");
     } finally {
       setLoader(false);
     }
   };
 
-
   return (
     <form
       onSubmit={handleSubmit}
-      className="lg:w-1/2 shadow mx-auto my-16 p-5 border border-gray-300 rounded-xl"
+      className="lg:w-1/2 shadow-lg mx-auto my-16 p-8 border border-gray-200 rounded-2xl bg-white"
     >
+      <title>register</title>
       <img
-        className="flex items-center mx-auto mb-3"
+        className="flex items-center mx-auto mb-4 w-20"
         src="/src/assets/images/logoicon.svg"
         alt="Logo"
       />
 
-      <h2 className="text-2xl text-center mb-5 text-primary font-bold">
+      <h2 className="text-3xl text-center mb-6 text-primary font-bold">
         Register
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-x-5">
+      <div className="grid md:grid-cols-2 gap-6">
         {/* Full name */}
-        <div className="my-5">
-          <label className="block" htmlFor="fullname">
+        <div className="flex flex-col">
+          <label className="text-gray-700 font-medium mb-1" htmlFor="fullname">
             Full Name
           </label>
           <input
             type="text"
             name="fullname"
             id="fullname"
-            className="input"
+            className="input input-bordered w-full shadow-sm focus:shadow-md transition"
+            placeholder="John Doe"
             required
           />
         </div>
 
         {/* Account type */}
-        <div className="my-5">
-          <label className="block" htmlFor="AccountFor">
+        <div className="flex flex-col">
+          <label className="text-gray-700 font-medium mb-1" htmlFor="AccountFor">
             Account for
           </label>
           <select
             onChange={(e) => setRole(e.target.value)}
             name="AccountFor"
             id="AccountFor"
-            className="input"
+            className="input input-bordered w-full shadow-sm focus:shadow-md transition"
             value={role}
           >
             <option value="Applicant">Applicant</option>
@@ -141,8 +139,8 @@ const Register = () => {
         </div>
 
         {/* Email */}
-        <div className="my-5">
-          <label className="block" htmlFor="email">
+        <div className="flex flex-col">
+          <label className="text-gray-700 font-medium mb-1" htmlFor="email">
             Email
           </label>
           <input
@@ -150,21 +148,23 @@ const Register = () => {
             type="email"
             name="email"
             id="email"
-            className="input"
+            className="input input-bordered w-full shadow-sm focus:shadow-md transition"
+            placeholder="email@example.com"
             required
           />
         </div>
 
         {/* Mobile */}
-        <div className="my-5">
-          <label className="block" htmlFor="Mobile">
+        <div className="flex flex-col">
+          <label className="text-gray-700 font-medium mb-1" htmlFor="Mobile">
             Mobile No.
           </label>
           <input
             type="text"
             name="Mobile"
             id="Mobile"
-            className="input"
+            className="input input-bordered w-full shadow-sm focus:shadow-md transition"
+            placeholder="+880 123456789"
             required
           />
         </div>
@@ -172,23 +172,28 @@ const Register = () => {
         {/* Conditional fields */}
         {role === "Applicant" ? (
           <>
-            <div className="my-5">
-              <label className="block" htmlFor="education">
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="education">
                 Education Level
               </label>
               <input
                 type="text"
                 name="education"
                 id="education"
-                className="input"
+                className="input input-bordered w-full shadow-sm focus:shadow-md transition"
+                placeholder="Bachelor's Degree"
               />
             </div>
 
-            <div className="my-5">
-              <label className="block" htmlFor="experience">
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="experience">
                 Experience Level
               </label>
-              <select name="experience" id="experience" className="input">
+              <select
+                name="experience"
+                id="experience"
+                className="input input-bordered w-full shadow-sm focus:shadow-md transition"
+              >
                 <option value="">Select...</option>
                 <option value="fresher">Fresher</option>
                 <option value="junior">Junior</option>
@@ -197,59 +202,68 @@ const Register = () => {
               </select>
             </div>
 
-            <div className="my-5">
-              <label className="block" htmlFor="career">
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="career">
                 Preferred Career Track
               </label>
               <input
                 type="text"
                 name="career"
                 id="career"
-                className="input"
+                className="input input-bordered w-full shadow-sm focus:shadow-md transition"
+                placeholder="Frontend Developer"
               />
             </div>
           </>
         ) : (
           <>
-            <div className="my-5">
-              <label className="block" htmlFor="companyName">
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="companyName">
                 Company Name
               </label>
               <input
                 type="text"
                 name="companyName"
                 id="companyName"
-                className="input"
+                className="input input-bordered w-full shadow-sm focus:shadow-md transition"
+                placeholder="Your Company"
               />
             </div>
 
-            <div className="my-5">
-              <label className="block" htmlFor="Designation">
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="Designation">
                 Designation
               </label>
               <input
                 type="text"
                 name="Designation"
                 id="Designation"
-                className="input"
+                className="input input-bordered w-full shadow-sm focus:shadow-md transition"
+                placeholder="CEO / Manager"
               />
             </div>
           </>
         )}
 
         {/* Password */}
-        <div className="my-5">
-          <label className="block" htmlFor="password">
+        <div className="flex flex-col relative">
+          <label className="text-gray-700 font-medium mb-1" htmlFor="password">
             Password
           </label>
           <input
-            autoComplete="current-password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             id="password"
-            className="input"
+            className="input input-bordered w-full shadow-sm focus:shadow-md pr-12 transition"
+            placeholder="********"
             required
           />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-[35px] cursor-pointer text-gray-400 hover:text-primary"
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
       </div>
 
@@ -257,14 +271,14 @@ const Register = () => {
       <button
         type="submit"
         disabled={loader}
-        className="btn btn-primary flex items-center mx-auto"
+        className="btn btn-primary w-full mt-6 shadow-lg hover:shadow-xl transition"
       >
         {loader ? "Loading..." : "Register"}
       </button>
 
       <p className="mt-5 text-center">
         Already have an account?{" "}
-        <Link className="text-blue-500 underline" to={"/login"}>
+        <Link className="text-primary underline" to={"/login"}>
           Login
         </Link>
       </p>

@@ -9,7 +9,7 @@ const Banner = () => {
         className="carousel-item relative w-full overflow-hidden"
       >
         <div className="absolute top-0 bottom-0 right-0 left-0 bg-[#17175271] flex flex-col items-center justify-center">
-          <h1 className="text-center text-white text-6xl kaushan-script">
+          <h1 className="text-center text-white text-2xl md:text-6xl kaushan-script">
             Bridge Skills To Bright Careers
           </h1>
           <p className="w-1/2 text-white text-sm text-center mt-4">
@@ -36,11 +36,11 @@ const Banner = () => {
       </div>
       <div id="slide2" className="carousel-item relative w-full">
         <div className="absolute top-0 bottom-0 right-0 left-0 bg-[#17175271] flex flex-col items-center justify-center">
-          <h1 className="text-center text-white text-6xl kaushan-script">
-          Equal Opportunity For Every Youth
+          <h1 className="text-center text-white text-2xl md:text-6xl kaushan-script">
+            Equal Opportunity For Every Youth
           </h1>
           <p className="w-1/2 text-white text-sm text-center mt-4">
-          Creates equal access to quality jobs and career growth for all young people. Provides guidance to the unemployed youth in developing practical skills and finding decent job opportunities.
+            Creates equal access to quality jobs and career growth for all young people. Provides guidance to the unemployed youth in developing practical skills and finding decent job opportunities.
           </p>
           <Link to={"/jobs"}>
             <button className="btn mt-5">Visit For Jobs</button>
@@ -60,12 +60,12 @@ const Banner = () => {
         </div>
       </div>
       <div id="slide3" className="carousel-item relative w-full">
-      <div className="absolute top-0 bottom-0 right-0 left-0 bg-[#17175271] flex flex-col items-center justify-center">
-          <h1 className="text-center text-white text-6xl kaushan-script">
-          Empower Youth Through Better Skills
+        <div className="absolute top-0 bottom-0 right-0 left-0 bg-[#17175271] flex flex-col items-center justify-center">
+          <h1 className="text-center text-white text-2xl md:text-6xl kaushan-script">
+            Empower Youth Through Better Skills
           </h1>
           <p className="w-1/2 text-white text-sm text-center mt-4">
-          Connects budding talents with actual job opportunities matching their potential. Transforms potential into employment by connecting personal development to relevant job opportunities.
+            Connects budding talents with actual job opportunities matching their potential. Transforms potential into employment by connecting personal development to relevant job opportunities.
           </p>
           <Link to={"/jobs"}>
             <button className="btn mt-5">Visit For Jobs</button>

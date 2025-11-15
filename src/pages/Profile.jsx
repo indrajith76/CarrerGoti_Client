@@ -4,16 +4,14 @@ import pdfToText from "react-pdftotext";
 import { toast } from "sonner";
 import axios from "../api/axios";
 import cleanAndParseJson from "../utils/cleanParseJson";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const { user, token, login } = useAuth();
-
   const [mode, setMode] = useState("pdf");
   const [loader, setLoader] = useState(false);
   const [generateData, setGenerateData] = useState(null);
   const navigation = useNavigate();
-
   const [skill, setSkill] = useState("");
   const [skills, setSkills] = useState(user?.skills || []);
 
@@ -29,6 +27,8 @@ export default function Profile() {
   const [allProject, setAllProject] = useState(user?.projects || []);
 
   const mergedData = generateData || user || {};
+
+
 
   useEffect(() => {
     if (generateData) {
@@ -144,59 +144,33 @@ export default function Profile() {
       setGenerateData(data);
       document.getElementById('profile_modal_1').close();
     } catch (error) {
+      console.log(error);
       toast.error("Failed to extract text");
     } finally {
       setLoader(false);
     }
   };
 
+
   return (
-    <div className="my-8">
+    <div className="my-4">
+      <title>profile</title>
 
       {/* Upload Button */}
-      <div className="flex justify-end px-6">
+      {user && user.role === "user" && <div className="text-end px-6">
         <button
           className="btn btn-primary shadow-md hover:shadow-xl transition-all"
           onClick={() => document.getElementById("profile_modal_1").showModal()}
         >
-          Upload Your CV
+          Upload
         </button>
-      </div>
+        <p>Resume to Generate Profile</p>
+      </div>}
 
-      {/* MODAL */}
-      <dialog id="profile_modal_1" className="modal">
-        <div className="modal-box shadow-xl border border-primary/20 rounded-xl">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-          </form>
 
-          <h3 className="text-xl font-bold text-primary text-center">Upload Your CV</h3>
-
-          <div className="flex justify-center mt-4 mb-5 gap-3">
-            <button className={`btn ${mode === "pdf" ? "btn-primary" : "btn-outline"}`} onClick={() => setMode("pdf")}>PDF</button>
-            <button className={`btn ${mode === "text" ? "btn-primary" : "btn-outline"}`} onClick={() => setMode("text")}>Text</button>
-          </div>
-
-          {/* PDF Upload */}
-          {mode === "pdf" && (
-            <form onSubmit={extractText} className="flex gap-3 items-center">
-              <input type="file" accept="application/pdf" name="file" className="file-input file-input-primary w-full" />
-              <button disabled={loader} className="btn btn-primary">{loader ? "Loading..." : "Analyze"}</button>
-            </form>
-          )}
-
-          {/* TEXT Upload */}
-          {mode === "text" && (
-            <form onSubmit={handleResumeTextToData}>
-              <textarea name="text" placeholder="Paste Resume Text" className="textarea textarea-primary w-full h-40"></textarea>
-              <button disabled={loader} className="btn btn-primary w-full mt-3">{loader ? "Loading..." : "Analyze"}</button>
-            </form>
-          )}
-        </div>
-      </dialog>
 
       {/* PROFILE SECTION */}
-      <div className="max-w-5xl mx-auto mt-10 p-6 bg-base-100 shadow-xl rounded-2xl border border-primary/20">
+      <div className="max-w-5xl mx-auto mt-6 p-6 bg-base-100 shadow-xl rounded-2xl border border-primary/20">
 
         <div className="flex flex-col items-center">
           <img
@@ -309,6 +283,38 @@ export default function Profile() {
 
       </div>
 
+
+      {/* MODAL */}
+      <dialog id="profile_modal_1" className="modal">
+        <div className="modal-box shadow-xl border border-primary/20 rounded-xl">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+
+          <h3 className="text-xl font-bold text-primary text-center">Upload Your CV</h3>
+
+          <div className="flex justify-center mt-4 mb-5 gap-3">
+            <button className={`btn ${mode === "pdf" ? "btn-primary" : "btn-outline"}`} onClick={() => setMode("pdf")}>PDF</button>
+            <button className={`btn ${mode === "text" ? "btn-primary" : "btn-outline"}`} onClick={() => setMode("text")}>Text</button>
+          </div>
+
+          {/* PDF Upload */}
+          {mode === "pdf" && (
+            <form onSubmit={extractText} className="flex gap-3 items-center">
+              <input type="file" accept="application/pdf" name="file" className="file-input file-input-primary w-full" />
+              <button disabled={loader} className="btn btn-primary">{loader ? "Loading..." : "Analyze"}</button>
+            </form>
+          )}
+
+          {/* TEXT Upload */}
+          {mode === "text" && (
+            <form onSubmit={handleResumeTextToData}>
+              <textarea name="text" placeholder="Paste Resume Text" className="textarea textarea-primary w-full h-40"></textarea>
+              <button disabled={loader} className="btn btn-primary w-full mt-3">{loader ? "Loading..." : "Analyze"}</button>
+            </form>
+          )}
+        </div>
+      </dialog>
     </div>
   );
 }
