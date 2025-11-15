@@ -12,34 +12,34 @@ const ProfileAssistant = () => {
   const [templete, setTemplete] = useState(1);
 
   return (
-    <div>
+    <div className="pb-10">
       <h1 className="text-center text-2xl my-5 text-primary font-bold ">
         Profile Assistant For CV Generate
       </h1>
 
-      <div className="flex items-center justify-center gap-5 w-full mb-10">
+      <div className="flex flex-wrap items-center justify-center gap-5 w-full mb-10">
         <p>Select Templete:</p>
         <img
           onClick={() => setTemplete(1)}
-          className={`w-10 border cursor-pointer rounded ${templete == 1 ? "border-3":""}`}
+          className={`w-10 border cursor-pointer rounded ${templete == 1 ? "border-3 border-primary":""}`}
           src="/src/assets/images/resume/resume1.jpg"
           alt=""
         />
         <img
           onClick={() => setTemplete(2)}
-          className={`w-10 border cursor-pointer rounded ${templete == 2 ? "border-3":""}`}
+          className={`w-10 border cursor-pointer rounded ${templete == 2 ? "border-3 border-primary":""}`}
           src="/src/assets/images/resume/resume2.jpg"
           alt=""
         />
         <img
           onClick={() => setTemplete(3)}
-          className={`w-10 border cursor-pointer rounded ${templete == 3 ? "border-3":""}`}
+          className={`w-10 border cursor-pointer rounded ${templete == 3 ? "border-3 border-primary":""}`}
           src="/src/assets/images/resume/resume3.jpg"
           alt=""
         />
         <img
           onClick={() => setTemplete(4)}
-          className={`w-10 border cursor-pointer rounded ${templete == 4 ? "border-3":""}`}
+          className={`w-10 border cursor-pointer rounded ${templete == 4 ? "border-3 border-primary":""}`}
           src="/src/assets/images/resume/resume4.jpg"
           alt=""
         />
