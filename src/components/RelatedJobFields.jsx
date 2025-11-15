@@ -36,7 +36,7 @@ const RelatedJobFields = () => {
 
   return (
     <div className="py-8 bg-white">
-      <h2 className="text-2xl font-bold text-center mb-6 text-primary">
+      <h2 className="text-4xl font-bold text-center mb-6 text-primary">
         Explore Jobs on Popular Platforms
       </h2>
       <div className="flex flex-wrap justify-center items-center gap-6">

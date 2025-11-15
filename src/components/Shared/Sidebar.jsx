@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../context/useAuth";
-import { FaTachometerAlt, FaBriefcase, FaUsers, FaBook, FaUserCircle } from "react-icons/fa";
+import { FaTachometerAlt, FaBriefcase, FaUsers, FaBook, FaUserCircle, FaListAlt } from "react-icons/fa";
+import { BsClipboardDataFill } from "react-icons/bs";
+import { MdManageAccounts } from "react-icons/md";
 
 const Sidebar = () => {
   const { user } = useAuth();
@@ -53,7 +55,7 @@ const Sidebar = () => {
       {
         label: "Manage Job Post",
         path: "/dashboard/ManageJobPost",
-        icon: <FaBriefcase />,
+        icon: <BsClipboardDataFill />,
       },
       {
         label: "Create Learning Resources",
@@ -63,12 +65,12 @@ const Sidebar = () => {
       {
         label: "Manage Learning Resources",
         path: "/dashboard/ManageLearningResources",
-        icon: <FaBook />,
+        icon: <FaListAlt />,
       },
       {
         label: "Manage All Users",
         path: "/dashboard/ManageAllUsers",
-        icon: <FaUsers />,
+        icon: <MdManageAccounts />,
       },
     );
   }

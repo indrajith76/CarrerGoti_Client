@@ -1,5 +1,5 @@
 ![alt](/src/assets/images/logoicon.svg)
-# **CareerGoti** 
+# **CareerGoti** - (Client)
 
 Empowering youth through career-ready opportunities and skill development — supporting SDG Goal 8: Decent Work \& Economic Growth.
 
@@ -16,6 +16,8 @@ CareerGoti is an online one-stop destination for students and freshers to explor
 * React Icons
 * Sonner Toast
 * Axios
+* react-countup
+* react-pdftotext
  
 ### **Setup Instructions -**
 
