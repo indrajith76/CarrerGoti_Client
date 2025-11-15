@@ -29,7 +29,7 @@ const Sidebar = () => {
       {
         label: "Manage Job Post",
         path: "/dashboard/ManageJobPost",
-        icon: <FaBriefcase />,
+        icon: <BsClipboardDataFill />,
       },
       {
         label: "Create Learning Resources",
@@ -39,7 +39,7 @@ const Sidebar = () => {
       {
         label: "Manage Learning Resources",
         path: "/dashboard/ManageLearningResources",
-        icon: <FaBook />,
+        icon: <FaListAlt />,
       },
     );
   }
