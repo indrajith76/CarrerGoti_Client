@@ -1,101 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
-import { useState } from "react";
 import useAuth from "../context/useAuth";
 import { toast } from "sonner";
+import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 
 const Login = () => {
   const [loader, setLoader] = useState(false);
-  const navigation = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoader(true);
 
-    const form = e.target;
-    const email = form.email.value.trim();
-    const password = form.password.value.trim();
+    const email = e.target.email.value.trim();
+    const password = e.target.password.value.trim();
 
     try {
       const res = await axios.post("/api/auth/login", { email, password });
+
       if (res.data.success) {
         login(res.data.data.token, res.data.data);
         toast.success(res.data.message);
-        form.reset();
-        setLoader(false);
-        navigation("/");
+        navigate("/");
       }
     } catch (error) {
-      console.error(error);
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message || "Login failed");
     } finally {
       setLoader(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="md:w-1/2 lg:w-3/12 shadow mx-auto mt-16 p-5 border border-gray-300 rounded-xl"
-    >
-      <img
-        className="flex items-center mx-auto mb-3"
-        src="/src/assets/images/logoicon.svg"
-        alt="Logo"
-      />
-      <h2 className="text-2xl text-center mb-5 text-primary font-bold">
-        Login
-      </h2>
-
-      <div className="my-5">
-        <label className="block" htmlFor="email">
-          Email
-        </label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          className="input"
-          required
-        />
-      </div>
-
-      <div className="my-5">
-        <label className="block" htmlFor="password">
-          Password
-        </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          className="input"
-          required
-        />
-      </div>
-
-      <p className="my-5 text-center">
-        Forget password?{" "}
-        <Link className="text-blue-500 underline" to={"/register"}>
-          Click here
-        </Link>
-      </p>
-
-      <button
-        type="submit"
-        className="btn btn-primary flex items-center mx-auto"
+    <div className="min-h-screen flex justify-center items-center bg-gray-50 p-4">
+      <title>login</title>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white shadow-lg border border-gray-200 rounded-2xl p-8 space-y-6"
       >
-        {loader ? "Loading..." : "Login"}
-      </button>
+        {/* Logo */}
+        <img
+          src="/src/assets/images/logoicon.svg"
+          className="w-20 mx-auto mb-1"
+        />
 
-      <p className="mt-5 text-center">
-        Don't have an account?{" "}
-        <Link className="text-blue-500 underline" to={"/register"}>
-          Register
-        </Link>
-      </p>
-    </form>
+        <h2 className="text-3xl font-bold text-center text-primary">
+          Login
+        </h2>
+
+        {/* Email */}
+        <div>
+          <label className="block mb-1 font-medium" htmlFor="email">
+            Email
+          </label>
+          <div>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="input w-full"
+              placeholder="Enter email"
+              required
+            />
+          </div>
+        </div>
+
+        <div className="my-5">
+          <label className="block mb-1 font-medium text-gray-700" htmlFor="password">
+            Password
+          </label>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              className="input w-full pr-10"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-primary"
+            >
+              {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+            </button>
+          </div>
+        </div>
+
+
+        {/* Forget Link */}
+        <p className="text-center text-sm">
+          Forgot password?
+          <Link className="text-blue-600 font-medium ml-1" to="/forget">
+            Click here
+          </Link>
+        </p>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="btn btn-primary w-full text-lg py-2"
+        >
+          {loader ? "Logging in..." : "Login"}
+        </button>
+
+        {/* Register Link */}
+        <p className="text-center text-sm">
+          Don’t have an account?
+          <Link className="text-blue-600 font-medium ml-1" to="/register">
+            Register
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 };
 

@@ -14,9 +14,10 @@ import Jobs from "../pages/jobs";
 import JobDetails from "../pages/JobDetails";
 import Resources from "../pages/Resources";
 import Root from "../layouts/root";
-import TestingUI from "../pages/TestingUI";
 import RoadMaps from "../pages/RoadMaps";
 import ProfileAssistant from "../pages/ProfileAssistant/ProfileAssistant";
+import Private from "./private";
+import ProfileForAdOr from "../pages/ProfileForAdOr";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/Profile",
-        element: <Profile />,
+        element: <Private><Profile /></Private>,
+      },
+      {
+        path: "/Profile2",
+        element: <Private><ProfileForAdOr /></Private>,
       },
       {
         path: "/resources",
@@ -49,33 +54,29 @@ export const router = createBrowserRouter([
       },
       {
         path: "/ProfileAssistant",
-        element: <ProfileAssistant />,
-      },
-      {
-        path: "/Test",
-        element: <TestingUI />,
-      },
+        element: <Private><ProfileAssistant /></Private>,
+      }
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: <Private><DashboardLayout /></Private>,
     children: [
       {
         path: "",
-        element: <Dashboard />,
+        element: <Private><Dashboard /></Private>,
       },
       {
         path: "CreateJobPost",
-        element: <CreateJobPost />,
+        element: <Private><CreateJobPost /></Private>,
       },
       {
         path: "ManageJobPost",
-        element: <ManageJobPost />,
+        element: <Private><ManageJobPost /></Private>,
       },
       {
         path: "CreateLearningResources",
-        element: <CreateLearningResources />,
+        element: <Private><CreateLearningResources /></Private>,
       },
       {
         path: "ManageLearningResources",

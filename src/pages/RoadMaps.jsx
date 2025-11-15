@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import RoadmapCard from "../components/RoadmapCard";
 import axios from "../api/axios";
 import cleanAndParseJson from "../utils/cleanParseJson";
-import toast from "daisyui/components/toast";
+import { toast } from "sonner";
+import useAuth from "../context/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const RoadMaps = () => {
   const [targetPosition, setTargetPosition] = useState("");
@@ -12,6 +14,8 @@ const RoadMaps = () => {
   const [keywords, setKeywords] = useState([]);
   const [selectedRoadmap, setSelectedRoadmap] = useState(null);
   const [loader, setLoader] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const addKeyword = () => {
     if (!keyword.trim() || keywords.includes(keyword.trim())) return;
@@ -26,6 +30,13 @@ const RoadMaps = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoader(true);
+
+    if (!user) {
+      toast.error("You must be logged in to generate a roadmap.");
+      setLoader(false);
+      navigate("/login");
+      return;
+    }
 
     if (!targetPosition || !timeFrame || !description || !keywords.length) {
       toast.error("All fields are required");

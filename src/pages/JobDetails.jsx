@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import axios from "../api/axios";
 import { FaMapMarkerAlt, FaBriefcase, FaUsers, FaBuilding } from "react-icons/fa";
 import { MdOutlineWork } from "react-icons/md";
+import useAuth from "../context/useAuth";
 
 const JobDetails = () => {
     const [job, setJob] = useState(null);
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
     const [releventResources, setReleventResources] = useState([]);
+    const { user } = useAuth();
 
     useEffect(() => {
         if (!id) return;
@@ -56,7 +58,8 @@ const JobDetails = () => {
 
     return (
         <div>
-            <div className="max-w-7xl mx-auto p-6 shadow-lg rounded-xl border mt-10 bg-white">
+            <title>details</title>
+            <div className="max-w-7xl mx-auto p-6 shadow-lg rounded-xl  mt-10 bg-white">
 
                 <h1 className="text-3xl font-bold text-primary mb-4">{job.title}</h1>
 
@@ -101,12 +104,12 @@ const JobDetails = () => {
                     </p>
                 </div>
 
-                <button
+                {user && user.role === "user" && <button
                     className="px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/80 transition"
                     onClick={() => alert("Apply functionality not implemented yet!")}
                 >
                     Apply Now
-                </button>
+                </button>}
             </div>
 
             {releventResources.length > 0 && <div className="max-w-7xl mx-auto shadow-lg rounded-xl mb-12 p-5">

@@ -2,8 +2,18 @@ import React from "react";
 import { BsJustifyRight } from "react-icons/bs";
 import Sidebar from "../components/Shared/Sidebar";
 import { Link, Outlet } from "react-router-dom";
+import useAuth from "../context/useAuth";
+import { ImSpinner2 } from "react-icons/im";
 
 const DashboardLayout = () => {
+  const { loading } = useAuth();
+  if (loading) {
+    return (
+      <div className="min-h-screen min-w-screen flex justify-center items-center">
+        <ImSpinner2 className='animate-spin' size={30} />
+      </div>
+    );
+  }
   return (
     <>
       <nav className="shadow px-5">
